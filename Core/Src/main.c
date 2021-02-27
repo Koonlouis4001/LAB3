@@ -342,12 +342,16 @@ void ADCModeChangeUpdate()
 	}
 	if(ADCMode == 0)
 	{
-		ADCOutputConverted = 3300.0*ADCChannel[0].Data/4095.0;//when V = 3.3 Data = 4095 so to convert data into mV the formula will be 3300*data/4095
+		ADCOutputConverted = (3300.0*ADCChannel[0].Data)/4096.0;//when V = 3.3 Data = 4096 so to convert data into mV the formula will be 3300*data/4096
 	}
-	//else
-	//{
-	//
-	//}
+	else
+	{
+		//temperature (in c) = ((Vsense - V25)/Avg_Slope)+25
+		//V25 typical 0.76V
+		//Avg_Slope typical 2.5 mV/C
+		float Vsense = ((3300.0*ADCChannel[1].Data)/4096.0);
+		ADCOutputConverted = ((Vsense - 760.0)/2.5)+25;
+	}
 }
 /* USER CODE END 4 */
 

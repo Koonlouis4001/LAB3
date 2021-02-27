@@ -68,7 +68,7 @@ void ADCModeChangeUpdate();
 
 int ADCMode = 0;
 uint32_t ButtonTimeStamp = 0;
-uint32_t ADCOutputConverted;
+float ADCOutputConverted;
 GPIO_PinState User_Button[2];
 /* USER CODE END PFP */
 
@@ -340,6 +340,14 @@ void ADCModeChangeUpdate()
 		}
 		User_Button[1] = User_Button[0];
 	}
+	if(ADCMode == 0)
+	{
+		ADCOutputConverted = 3300.0*ADCChannel[0].Data/4095.0;//when V = 3.3 Data = 4095 so to convert data into mV the formula will be 3300*data/4095
+	}
+	//else
+	//{
+	//
+	//}
 }
 /* USER CODE END 4 */
 

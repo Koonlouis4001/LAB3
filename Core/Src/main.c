@@ -289,6 +289,7 @@ static void MX_GPIO_Init(void)
 
 void ADCPollingMethodInit()
 {
+	//setting PA0 and Temp
 	//PA0 - ADC IN0
 	ADCChannel[0].Config.Channel = ADC_CHANNEL_0;
 	ADCChannel[0].Config.Rank = 1;

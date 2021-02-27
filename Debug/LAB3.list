@@ -1534,6 +1534,7 @@ void ADCPollingMethodInit()
 {
  8000fe8:	b480      	push	{r7}
  8000fea:	af00      	add	r7, sp, #0
+	//setting PA0 and Temp
 	//PA0 - ADC IN0
 	ADCChannel[0].Config.Channel = ADC_CHANNEL_0;
  8000fec:	4b0b      	ldr	r3, [pc, #44]	; (800101c <ADCPollingMethodInit+0x34>)

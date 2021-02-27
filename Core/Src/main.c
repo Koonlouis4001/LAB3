@@ -64,9 +64,10 @@ static void MX_ADC1_Init(void);
 /* USER CODE BEGIN PFP */
 void ADCPollingMethodInit();
 void ADCPollingMethodUpdate(); //Read ADC from 2 sources(In0,Temp).
-void ADCModeChangeUpdate(int *mode);
+void ADCModeChangeUpdate();
 
 int ADCMode = 0;
+uint32_t ButtonTimeStamp = 0;
 uint32_t ADCOutputConverted;
 GPIO_PinState User_Button[2];
 /* USER CODE END PFP */
@@ -119,7 +120,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  //read analog
 	  ADCPollingMethodUpdate();
-	  ADCModeChangeUpdate(&ADCMode);
+	  ADCModeChangeUpdate();
   }
   /* USER CODE END 3 */
 }
@@ -320,9 +321,25 @@ void ADCPollingMethodUpdate()
 
 }
 
-void ADCModeChangeUpdate(int *mode)
+void ADCModeChangeUpdate()
 {
-
+	if(HAL_GetTick() - ButtonTimeStamp >= 100)
+	{
+		ButtonTimeStamp = HAL_GetTick();
+		User_Button[0] = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
+		if(User_Button[1] == GPIO_PIN_SET && User_Button[0] == GPIO_PIN_RESET)
+		{
+			if(ADCMode == 0)
+			{
+				ADCMode = 1;
+			}
+			else
+			{
+				ADCMode = 0;
+			}
+		}
+		User_Button[1] = User_Button[0];
+	}
 }
 /* USER CODE END 4 */
 
